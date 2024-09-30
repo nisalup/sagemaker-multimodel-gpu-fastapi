@@ -26,9 +26,17 @@ APP = FastAPI(
 
 @APP.post('/invocations')
 async def invocations(request: Request):
+    """Handle the invocations request
+
+    Args:
+        request (Request): The incoming request object
+
+    Returns:
+        Response: The response object
+    """
     request_body = await request.json()
     models_list = request_body.get("models")
-    await handle_model_loading(request, models_list)
+    handle_model_loading(request, models_list)
 
     # hypothetical model response
     model_response = do_inference(

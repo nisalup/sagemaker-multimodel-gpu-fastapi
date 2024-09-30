@@ -28,5 +28,9 @@ class DetectionModel():
         Returns:
             Any: The loaded model
         """
+        # add code to download models here, normally you can use
+        # directory such as /opt/ml/models/ to store the models
+        # and then download them from s3 to this directory
+
         model = "<Load you model here>"  # Add function to load the model here
         return model
