@@ -6,11 +6,15 @@ from fastapi.responses import JSONResponse
 import uvicorn
 from fastapi import FastAPI, status, Request, Response
 
-from sm_multimodel_gpu_fastapi.api.controllers.inference_controller import do_inference
+from sm_multimodel_gpu_fastapi.api.controllers.inference_controller import (
+    do_inference
+)
 from sm_multimodel_gpu_fastapi.api.controllers.lifespan_controller import (
     startup_tasks
 )
-from sm_multimodel_gpu_fastapi.api.controllers.models_controller import handle_model_loading
+from sm_multimodel_gpu_fastapi.api.controllers.models_controller import (
+    handle_model_loading
+)
 
 APP = FastAPI(
     lifespan=startup_tasks,

@@ -1,3 +1,5 @@
+# An exampe dummy dockerfile that can be used as a base for the final dockerfile
+# Note that the base dockerfile should be compatible with Sagemaker
 FROM nvidia/cuda:12.6.1-cudnn-base-ubuntu22.04
 
 # Set a docker label to enable container to use SAGEMAKER_BIND_TO_PORT

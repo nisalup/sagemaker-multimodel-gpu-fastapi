@@ -1,5 +1,5 @@
 """
-This file contains the main logic for handling models in the Inferencer API.
+This file contains the main logic for handling models in the API.
 """
 
 from datetime import datetime
@@ -11,6 +11,9 @@ import logging as log
 from sm_multimodel_gpu_fastapi.api.models.detection_model import DetectionModel
 
 
+# Maximum number of models that can be loaded at a time,
+# this can be adjusted based on the available memory and on
+# the requirements of your models.
 MAX_LOADED_MODELS = 20
 
 
@@ -23,14 +26,12 @@ def handle_model_loading(
     request body.
 
     Args:
-        request (Request): The request object.
-        infer_request_body
-        (InferenceRequestBody | SagemakerInferenceRequestBody):
-        The inference request body.
+        request (Request): incoming request object from fastapi
+        models_list (list[str]): list of model names to load
 
     Raises:
-        If the number of models in the request exceeds the
-        maximum allowed number.
+        Exception: if the number of models in the request exceeds the maximum
+            allowed number of models per single request
 
     """
     prediction_models: list[DetectionModel] = \
@@ -96,16 +97,18 @@ def __load_model(
 
     Args:
         model_name (str): name of the model to load
-        infer_request_body (InferenceRequestBody): inncoming request body
 
     Returns:
-        LoadedModel: loaded pytorch model
+        LoadedModel: loaded model
     """
     log.info(f"Loading model {model_name} into memory...")
     return DetectionModel(model_name)
 
 
-def __unload_model(model_name_to_unload: str, request: Request) -> None:
+def __unload_model(
+    model_name_to_unload: str,
+    request: Request
+) -> None:
     """This function unloads a model from memory.
 
     Args:
